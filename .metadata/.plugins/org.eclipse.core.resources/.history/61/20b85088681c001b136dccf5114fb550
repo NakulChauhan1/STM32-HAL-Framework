@@ -1,0 +1,7 @@
+#include "stm32f4xx_hal.h"
+
+//here we will do processor specific low level initializations required for the application
+
+
+
+//here we will do peripheral specific low level initializations required for the application

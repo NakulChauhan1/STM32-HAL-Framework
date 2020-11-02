@@ -1,0 +1,50 @@
+
+#include "stm32f4xx_hal.h"
+#include "main.h"
+
+void SystemClockConfig();
+void UART_Init ();
+
+int main()
+{
+	//first API to be called in order to use STMCube HAL LAyer
+	HAL_Init();
+
+	//not present in Cube HAL, this  is application specific, by default system clock will be running internal RC oscillator, but to change it this function is used
+	SystemClockConfig();
+
+	UART_Init ();
+
+	return 0;
+}
+
+void SystemClockConfig()
+{
+	//this application does not require system clock configurations
+}
+
+void UART_Init ()
+{
+		GPIO_InitTypeDef gpio;
+		gpio.Mode = GPIO_MODE_AF_OD;
+		gpio.Pin = GPIO_PIN_0;
+		gpio.Pull = GPIO_NOPULL;
+		gpio.Speed = GPIO_SPEED_FREQ_MEDIUM;
+		gpio.Alternate = GPIO_AF7_USART2;
+
+
+		HAL_GPIO_Init ( GPIOA,  &gpio );
+
+		UART_HandleTypeDef uart2;
+		uart2.Instance = USART2;
+		uart2.Init.BaudRate = 115200;
+		uart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+		uart2.Init.Mode = UART_MODE_RX;
+		uart2.Init.OverSampling = UART_OVERSAMPLING_8;
+		uart2.Init.Parity = UART_PARITY_NONE;
+		uart2.Init.StopBits = UART_STOPBITS_1;
+		uart2.Init.WordLength = UART_WORDLENGTH_8B;
+
+		HAL_UART_Init ( &uart2 );
+		UART_MaspInit();														//low level intializarions of UART2
+}

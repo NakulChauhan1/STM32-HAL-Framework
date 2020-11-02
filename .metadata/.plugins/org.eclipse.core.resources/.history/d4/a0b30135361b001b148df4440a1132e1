@@ -1,0 +1,82 @@
+/*
+ *
+ * */
+
+
+#include "main.h"
+#include<string.h>
+
+void SystemClockConfig();
+void TIM6_Inits();
+void Error_Handler();
+
+TIM_HandleTypeDef htim_6;
+
+int main()
+{
+
+	//first API to be called in order to use STMCube HAL LAyer
+	//it does HL initializations and LL initializations of processor
+	HAL_Init();
+
+	//clock configurations for the Application
+	SystemClockConfig();
+
+	//HLL initializations and LL initializations of peripheral
+	TIM6_Inits();
+
+	return 0;
+}
+
+void SystemClockConfig()
+{
+	//we donot need clk config, in this application, so default clock is sufficient
+}
+
+void TIM6_Inits()
+{
+	htim_6.Instance = TIM6;
+	htim_6.Init.CounterMode = TIM_COUNTERMODE_UP;				//Basic timer can only do up counting
+	htim_6.Init.Prescaler = 24;
+	htim_6.Init.Period = 64000 - 1;
+
+	if ( HAL_TIM_Base_Init ( &htim_6 ) != HAL_OK )
+	{
+		Error_Handler ();
+	}
+
+}
+
+void Error_Handler ()
+{
+	while(1);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ * 1. Processor Initializations
+ * 2. System Clock Configurations
+ * 3. Peripheral Initializations
+ * 	  High Level Inits (done in UART2_Init() ) + Low Level Inits ( done in msp.c)
+ *
+ *
+ * Processor Initializations: ( done in HAL_Inits() )
+ * - High Level Inits
+ * - Low Level Inits (call is made by HAL_Init() to HAL_MspInit() in msp.c to do this task)
+ *
+ *
+ * Peripheral Initializations:
+ * - High Level Inits   ( done in UART2_Init () )
+ * - Low Level Inits	(call is made by HAL_UART_Init() to HAL_UART_MspInit() in msp.c to do this task)
+ *
+ * */

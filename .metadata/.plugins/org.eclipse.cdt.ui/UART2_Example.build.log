@@ -1,0 +1,23 @@
+21:57:19 **** Incremental Build of configuration Debug for project UART2_Example ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+N:\Workspace\MCU2_Udemy_Course\My_Workspace\MasteringMCU2_WS\AC6\R\UART2_Example\Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F446xx -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/AC6/R/UART2_Example/Inc" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/AC6/R/UART2_Example/Drivers/STM32F4xx_HAL_Driver/Inc" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/AC6/R/UART2_Example/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/AC6/R/UART2_Example/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/AC6/R/UART2_Example/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: UART2_Example.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "UART2_Example.elf" @"objects.list"   -lm
+Finished building target: UART2_Example.elf
+ 
+make --no-print-directory post-build
+Generating binary and Printing size information:
+arm-none-eabi-objcopy -O binary "UART2_Example.elf" "UART2_Example.bin"
+arm-none-eabi-size "UART2_Example.elf"
+   text	   data	    bss	    dec	    hex	filename
+   3636	     24	   1632	   5292	   14ac	UART2_Example.elf
+ 
+
+21:57:30 Build Finished (took 10s.423ms)
+

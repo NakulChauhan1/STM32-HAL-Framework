@@ -1,0 +1,10 @@
+16:33:21 **** Incremental Build of configuration Debug for project PLL_SYSCLK_via_HSI ****
+make all 
+Building file: ../Src/it.c
+Invoking: MCU GCC Compiler
+N:\Workspace\MCU2_Udemy_Course\My_Workspace\MasteringMCU2_WS\PLL_SYSCLK_via_HSI\Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F446xx -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/PLL_SYSCLK_via_HSI/Inc" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/PLL_SYSCLK_via_HSI/Drivers/STM32F4xx_HAL_Driver/Inc" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/PLL_SYSCLK_via_HSI/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/PLL_SYSCLK_via_HSI/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/PLL_SYSCLK_via_HSI/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/it.d" -MT"Src/it.o" -o "Src/it.o" "../Src/it.c"
+Command canceled
+
+16:33:29 Build Cancelled (took 8s.489ms)
+

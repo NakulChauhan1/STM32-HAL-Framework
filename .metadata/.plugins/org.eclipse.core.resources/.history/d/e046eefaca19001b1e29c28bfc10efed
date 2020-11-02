@@ -1,0 +1,8 @@
+
+#ifndef __MAIN_H
+#define __MAIN_H
+
+void SystemClockConfig ();
+
+#endif /* __MAIN_H */
+

@@ -1,0 +1,41 @@
+16:33:48 **** Incremental Build of configuration Debug for project Running_mcu_at_max_sysclk ****
+make all 
+Building file: ../Src/it.c
+Invoking: MCU GCC Compiler
+N:\Workspace\MCU2_Udemy_Course\My_Workspace\MasteringMCU2_WS\Running_mcu_at_max_sysclk\Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/Running_mcu_at_max_sysclk/Inc" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/Running_mcu_at_max_sysclk/Drivers/STM32F4xx_HAL_Driver/Inc" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/Running_mcu_at_max_sysclk/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/Running_mcu_at_max_sysclk/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/Running_mcu_at_max_sysclk/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/it.d" -MT"Src/it.o" -o "Src/it.o" "../Src/it.c"
+Finished building: ../Src/it.c
+ 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+N:\Workspace\MCU2_Udemy_Course\My_Workspace\MasteringMCU2_WS\Running_mcu_at_max_sysclk\Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/Running_mcu_at_max_sysclk/Inc" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/Running_mcu_at_max_sysclk/Drivers/STM32F4xx_HAL_Driver/Inc" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/Running_mcu_at_max_sysclk/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/Running_mcu_at_max_sysclk/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/Running_mcu_at_max_sysclk/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+../Src/main.c: In function 'SystemClockConfig':
+../Src/main.c:26:2: warning: implicit declaration of function 'memset' [-Wimplicit-function-declaration]
+  memset( &osc_init, 0, sizeof(osc_init) );
+  ^~~~~~
+../Src/main.c:26:2: warning: incompatible implicit declaration of built-in function 'memset'
+../Src/main.c:26:2: note: include '<string.h>' or provide a declaration of 'memset'
+Finished building: ../Src/main.c
+ 
+Building file: ../Src/msp.c
+Invoking: MCU GCC Compiler
+N:\Workspace\MCU2_Udemy_Course\My_Workspace\MasteringMCU2_WS\Running_mcu_at_max_sysclk\Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -DUSE_HAL_DRIVER -DSTM32F446xx -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/Running_mcu_at_max_sysclk/Inc" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/Running_mcu_at_max_sysclk/Drivers/STM32F4xx_HAL_Driver/Inc" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/Running_mcu_at_max_sysclk/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/Running_mcu_at_max_sysclk/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/Running_mcu_at_max_sysclk/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/msp.d" -MT"Src/msp.o" -o "Src/msp.o" "../Src/msp.c"
+Finished building: ../Src/msp.c
+ 
+Building target: Running_mcu_at_max_sysclk.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "Running_mcu_at_max_sysclk.elf" @"objects.list"   -lm
+Finished building target: Running_mcu_at_max_sysclk.elf
+ 
+make --no-print-directory post-build
+Generating hex and Printing size information:
+arm-none-eabi-objcopy -O ihex "Running_mcu_at_max_sysclk.elf" "Running_mcu_at_max_sysclk.hex"
+arm-none-eabi-size "Running_mcu_at_max_sysclk.elf"
+   text	   data	    bss	    dec	    hex	filename
+   4556	     20	   1636	   6212	   1844	Running_mcu_at_max_sysclk.elf
+ 
+
+16:34:05 Build Finished (took 16s.883ms)
+

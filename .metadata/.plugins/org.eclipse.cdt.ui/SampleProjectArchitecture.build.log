@@ -1,0 +1,14 @@
+23:06:04 **** Incremental Build of configuration Debug for project SampleProjectArchitecture ****
+make all 
+Building target: SampleProjectArchitecture.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "SampleProjectArchitecture.elf" @"objects.list"   -lm
+startup/startup_stm32f446xx.o: In function `LoopFillZerobss':
+N:\Workspace\MCU2_Udemy_Course\My_Workspace\MasteringMCU2_WS\SampleProjectArchitecture\Debug/../startup/startup_stm32f446xx.s:109: undefined reference to `SystemInit'
+N:\Workspace\MCU2_Udemy_Course\My_Workspace\MasteringMCU2_WS\SampleProjectArchitecture\Debug/../startup/startup_stm32f446xx.s:113: undefined reference to `main'
+collect2.exe: error: ld returned 1 exit status
+makefile:34: recipe for target 'SampleProjectArchitecture.elf' failed
+make: *** [SampleProjectArchitecture.elf] Error 1
+
+23:06:06 Build Finished (took 1s.806ms)
+

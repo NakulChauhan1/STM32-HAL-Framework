@@ -1,0 +1,17 @@
+
+void HAL_MspInit(void)
+{
+	//here we will do processor specific low level initializations required for the application
+
+	//1. Set up the priority grouping for the processor
+
+
+	//2. Enable required system exceptions of the processor
+
+
+	//3. Configure the priority for the system exceptions
+
+
+	//Note: All the APIs which deals with processor specific details are in "stm32f4xx_hal_cortex.c" header file
+
+}

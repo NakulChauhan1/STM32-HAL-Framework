@@ -1,0 +1,13 @@
+
+
+#include "stm32f4xx_hal.h"
+
+void SystemClockConfig( uint8_t );
+
+void UART2_Init ();
+void Error_Handler ();
+
+#define SYS_CLK_FREQ_50MHz		50000000
+#define SYS_CLK_FREQ_84MHz		80000000
+#define SYS_CLK_FREQ_120MHz		120000000
+

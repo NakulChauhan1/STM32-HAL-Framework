@@ -1,0 +1,15 @@
+11:28:36 **** Incremental Build of configuration Debug for project Time_base_100ms ****
+make all 
+Building file: ../Src/main.c
+Invoking: MCU GCC Compiler
+N:\Workspace\MCU2_Udemy_Course\My_Workspace\MasteringMCU2_WS\Time_base_100ms\Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F446xx -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/Time_base_100ms/Inc" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/Time_base_100ms/Drivers/STM32F4xx_HAL_Driver/Inc" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/Time_base_100ms/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/Time_base_100ms/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/Time_base_100ms/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
+Finished building: ../Src/main.c
+ 
+Building target: Time_base_100ms.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "Time_base_100ms.elf" @"objects.list"   -lm
+Command canceled
+
+11:28:54 Build Cancelled (took 17s.901ms)
+

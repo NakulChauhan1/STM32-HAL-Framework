@@ -1,0 +1,6 @@
+15:14:19 **** Incremental Build of configuration Debug for project TIMER_Time_base_100ms_IT ****
+make all 
+make: Nothing to be done for 'all'.
+
+15:14:21 Build Finished (took 1s.614ms)
+

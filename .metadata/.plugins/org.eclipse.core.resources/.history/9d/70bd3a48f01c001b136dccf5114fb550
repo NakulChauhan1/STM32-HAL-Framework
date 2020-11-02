@@ -1,0 +1,8 @@
+
+#include "main.h"
+
+void SysTick_Handler ()
+{
+	HAL_IncTick ();					//incrementing global tick variable
+	HAL_SYSTICK_IRQHandler ();	    //process the systick interrupt
+}

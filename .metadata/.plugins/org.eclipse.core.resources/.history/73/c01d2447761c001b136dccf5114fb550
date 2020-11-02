@@ -1,0 +1,86 @@
+/*
+ * Write a application, which uses basic timer to generate interrupt for every 10  microseconds
+ * but with timer clock frequency, TIMx_CLK of 50Mhz. Toggle the GPIO or LED inside, the Timer IRQ handler and verify using logic analyzer.
+ *
+ * */
+
+
+#include "main.h"
+#include<string.h>
+
+
+void SystemClockConfig ();
+void TIM2_Init ();
+void Error_Handler();
+
+
+TIM_HandleTypeDef htim_6;
+
+int main ()
+{
+	HAL_Init ();
+
+	SystemClockConfig ();
+
+	//now SYSCLK = 50MHz
+
+	TIM2_Init ();
+
+
+
+
+	return 0;
+}
+
+
+
+void SystemClockConfig ()
+{
+
+}
+
+void TIM2_Init ()
+{
+
+}
+
+
+
+void Error_Handler()
+{
+	while(1);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ * 1. Processor Initializations
+ * 2. System Clock Configurations
+ * 3. Peripheral Initializations
+ * 	  High Level Inits (done in UART2_Init() ) + Low Level Inits ( done in msp.c)
+ *
+ *
+ * Processor Initializations: ( done in HAL_Inits() )
+ * - High Level Inits
+ * - Low Level Inits (call is made by HAL_Init() to HAL_MspInit() in msp.c to do this task)
+ *
+ *
+ * Peripheral Initializations:
+ * - High Level Inits   ( done in UART2_Init () )
+ * - Low Level Inits	(call is made by HAL_UART_Init() to HAL_UART_MspInit() in msp.c to do this task)
+ *
+ * */

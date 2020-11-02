@@ -1,0 +1,21 @@
+
+#include "stm32f4xx_hal.h"
+#include "main.h"
+
+void SystemClockConfig();
+
+int main()
+{
+	//first API to be called in order to use STMCube HAL LAyer
+	HAL_Init();
+
+	//not present in Cube HAL, this  is application specific, by default system clock will be running internal RC oscillator, but to change it this function is used
+	SystemClockConfig();
+
+	return 0;
+}
+
+void SystemClockConfig()
+{
+
+}

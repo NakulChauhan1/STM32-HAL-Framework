@@ -1,0 +1,49 @@
+/*
+ *
+ * */
+
+
+#include "main.h"
+#include<string.h>
+
+
+int main()
+{
+
+
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ * 1. Processor Initializations
+ * 2. System Clock Configurations
+ * 3. Peripheral Initializations
+ * 	  High Level Inits (done in UART2_Init() ) + Low Level Inits ( done in msp.c)
+ *
+ *
+ * Processor Initializations: ( done in HAL_Inits() )
+ * - High Level Inits
+ * - Low Level Inits (call is made by HAL_Init() to HAL_MspInit() in msp.c to do this task)
+ *
+ *
+ * Peripheral Initializations:
+ * - High Level Inits   ( done in UART2_Init () )
+ * - Low Level Inits	(call is made by HAL_UART_Init() to HAL_UART_MspInit() in msp.c to do this task)
+ *
+ * */

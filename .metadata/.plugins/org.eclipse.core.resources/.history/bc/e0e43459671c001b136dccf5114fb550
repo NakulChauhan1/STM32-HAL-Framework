@@ -1,0 +1,23 @@
+#include "main.h"
+
+int main(void)
+{
+
+  HAL_Init();
+
+  SystemClockConfig();
+
+  //peripheral inits
+
+
+  while (1);
+
+  return 0;
+}
+
+
+void SystemClockConfig(void)
+{
+
+}
+

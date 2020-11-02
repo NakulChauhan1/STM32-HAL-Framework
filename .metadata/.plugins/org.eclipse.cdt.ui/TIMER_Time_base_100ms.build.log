@@ -1,0 +1,23 @@
+15:14:03 **** Incremental Build of configuration Debug for project TIMER_Time_base_100ms ****
+make all 
+Building file: ../Src/msp.c
+Invoking: MCU GCC Compiler
+N:\Workspace\MCU2_Udemy_Course\My_Workspace\MasteringMCU2_WS\TIMER_Time_base_100ms\Debug
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F446xx -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/TIMER_Time_base_100ms/Inc" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/TIMER_Time_base_100ms/Drivers/STM32F4xx_HAL_Driver/Inc" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/TIMER_Time_base_100ms/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/TIMER_Time_base_100ms/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/TIMER_Time_base_100ms/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/msp.d" -MT"Src/msp.o" -o "Src/msp.o" "../Src/msp.c"
+Finished building: ../Src/msp.c
+ 
+Building target: TIMER_Time_base_100ms.elf
+Invoking: MCU GCC Linker
+arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "TIMER_Time_base_100ms.elf" @"objects.list"   -lm
+Finished building target: TIMER_Time_base_100ms.elf
+ 
+make --no-print-directory post-build
+Generating binary and Printing size information:
+arm-none-eabi-objcopy -O binary "TIMER_Time_base_100ms.elf" "TIMER_Time_base_100ms.bin"
+arm-none-eabi-size "TIMER_Time_base_100ms.elf"
+   text	   data	    bss	    dec	    hex	filename
+   2176	     20	   1628	   3824	    ef0	TIMER_Time_base_100ms.elf
+ 
+
+15:14:12 Build Finished (took 8s.622ms)
+
