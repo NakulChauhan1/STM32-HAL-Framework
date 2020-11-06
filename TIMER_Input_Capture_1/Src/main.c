@@ -149,15 +149,6 @@ void SystemClockConfig ()
 
 }
 
-void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef * htim )
-{
-	//do nothing or we can stop Timer
-}
-
-void HAL_TIM_TriggerCallback(TIM_HandleTypeDef *htim)
-{
-
-}
 
 
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)					//whenever capture event occurs then this callback will be called

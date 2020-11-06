@@ -1,12 +1,11 @@
 /*
- * Measure the frequency  of a signal using Timer. We will be using LSE (32.768 MHz) as signal, ie we will be
- * measuring frequency of LSE signal.
+ * Measure the frequency of a signal which is generated using Timer6.
  *
- * In this application, we have to generate LSE ie we have to first turn on LSE oscillator which is present
- * in our board and then have to bring it into one of the mcu pins (MC01 or MCO2) (for that have to do some settings)
-	and then through jumper wires we will giving to timer channel so that we can calculate it.
+ * In this application, we have to generate signal using timer and then have to bring it into one of
+ *  the mcu pins (MC01 or MCO2) (for that have to do some settings)	and then through jumper wires we
+ *   will giving to another timer channel so that we can calculate frequency of signal which is connected
+ *   to channel.
 
-	LSE is there in mcu for RTC related applications.
  */
 
 
@@ -16,17 +15,20 @@
 
 void SystemClockConfig ();
 void TIM2_Init ();
+void TIM6_Init ();
 void Error_Handler();
 void find_Frequency_of_signal ();
-void LSE_Configurations ();
 void UART2_Init ();
+void GPIO_Init ();
 
 uint32_t first = -1;
 uint32_t second = -1;
 
-TIM_HandleTypeDef htim_6;
+TIM_HandleTypeDef htim_2;
 TIM_IC_InitTypeDef sConfig;
 UART_HandleTypeDef huart;
+
+TIM_HandleTypeDef htim6_freq;				//for timer which is used for generating 50Mhz frequency signal
 
 volatile uint8_t is_capture_done = 0;
 
@@ -34,10 +36,16 @@ int main ()
 {
 	HAL_Init ();
 
-	LSE_Configurations ();
 
 	SystemClockConfig ();
 
+	TIM6_Init ();					//for geneating signal
+
+	HAL_TIM_Base_Start_IT ( &htim6_freq );
+
+	HAL_RCC_MCOConfig ( RCC_MCO1, RCC_MCO1SOURCE_HSE, RCC_MCODIV_4 );					//bringing timer frequency generated into one of mcu pin ie MCO1
+
+	GPIO_Init ();
 
 	TIM2_Init ();
 
@@ -52,7 +60,7 @@ int main ()
 
 void find_Frequency_of_signal ()
 {
-	if ( HAL_TIM_IC_Start_IT ( &htim_6, TIM_CHANNEL_1 ) != HAL_OK )
+	if ( HAL_TIM_IC_Start_IT ( &htim_2, TIM_CHANNEL_1 ) != HAL_OK )
 	{
 		Error_Handler ();
 	}
@@ -76,7 +84,7 @@ void find_Frequency_of_signal ()
 					capture_difference = first - second;
 				}
 
-				timer2_count_freq = ( HAL_RCC_GetPCLK1Freq () * 2) * ( htim_6.Init.Prescaler + 1 );
+				timer2_count_freq = ( HAL_RCC_GetPCLK1Freq () * 2) * ( htim_2.Init.Prescaler + 1 );
 				timer2_count_resolution = 1/ timer2_count_freq;
 				time_period_of_signal = capture_difference * timer2_count_resolution;
 				freq_of_signal = 1/time_period_of_signal;
@@ -91,34 +99,20 @@ void find_Frequency_of_signal ()
 }
 
 
-void LSE_Configurations ()
-{
-	//activating LSE crystal oscillator is done in SystemClockConfig
-
-	uint32_t RCC_MCODiv = RCC_MCODIV_1;							//no division
-	uint32_t RCC_MCOSource = RCC_MCO1SOURCE_LSE;				//oscillator frequency has to come from LSE
-	uint32_t RCC_MCOx = RCC_MCO1;								//generate oscillator frequency /clock at MCO1 pin
-
-
-
-	 HAL_RCC_MCOConfig( RCC_MCOx, RCC_MCOSource, RCC_MCODiv );			//it brings LSE oscillator frequency into gpio pin ie to MCO1
-
-	//Note: Pin Muxing ie assigning pin alternate functionality (ie assigning pin capability to produce clock/frequency) is done in this API only, so no need to do it seperatly
-
-}
 
 void SystemClockConfig ()
 {
 		RCC_OscInitTypeDef osc_init;
 
 		memset ( &osc_init, 0, sizeof(osc_init) );
-		osc_init.OscillatorType = RCC_OSCILLATORTYPE_HSI | RCC_OSCILLATORTYPE_LSE;
+		osc_init.OscillatorType = RCC_OSCILLATORTYPE_HSE | RCC_OSCILLATORTYPE_LSE | RCC_OSCILLATORTYPE_HSI ;
+		osc_init.HSEState = RCC_HSE_ON;
 		osc_init.HSIState = RCC_HSI_ON;
 		osc_init.LSEState = RCC_LSE_ON;						//LSE Configurations
 		osc_init.HSICalibrationValue = 16;
-		osc_init.PLL.PLLSource = RCC_PLLSOURCE_HSI;
+		osc_init.PLL.PLLSource = RCC_PLLSOURCE_HSE;
 		osc_init.PLL.PLLState = RCC_PLL_ON;
-		osc_init.PLL.PLLM = 8;
+		osc_init.PLL.PLLM = 4;
 		osc_init.PLL.PLLN = 50;
 		osc_init.PLL.PLLP = 2;
 		osc_init.PLL.PLLQ = 2;
@@ -149,16 +143,6 @@ void SystemClockConfig ()
 
 }
 
-void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef * htim )
-{
-	//do nothing or we can stop Timer
-}
-
-void HAL_TIM_TriggerCallback(TIM_HandleTypeDef *htim)
-{
-
-}
-
 
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)					//whenever capture event occurs then this callback will be called
 {
@@ -184,27 +168,49 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)					//whenever capture 
 void TIM2_Init ()
 {
 	//HLL configurations of timer2
-	htim_6.Instance = TIM2;
-	htim_6.Init.CounterMode = TIM_COUNTERMODE_UP;
-	htim_6.Init.Prescaler = 1;				//clock will be divided by 2
-	htim_6.Init.Period = 0xFFFFFFFF;		//counting upto maximum value
+	htim_2.Instance = TIM2;
+	htim_2.Init.CounterMode = TIM_COUNTERMODE_UP;
+	htim_2.Init.Prescaler = 1;				//clock will be divided by 2
+	htim_2.Init.Period = 0xFFFFFFFF;		//counting upto maximum value
 
-	if ( HAL_TIM_IC_Init ( &htim_6 ) != HAL_OK )			//this API is used to configure the Time base unit of Input Capture Timer
+	if ( HAL_TIM_IC_Init ( &htim_2 ) != HAL_OK )			//this API is used to configure the Time base unit of Input Capture Timer
 	{
 		Error_Handler();
 	}
 
-	htim_6.Channel = HAL_TIM_ACTIVE_CHANNEL_1;
 
 	sConfig.ICPolarity = TIM_ICPOLARITY_RISING;				//ICPolarity asks for at which edge we want event to be detected ie timer to capture the value of Counter register
 	sConfig.ICSelection = TIM_ICSELECTION_DIRECTTI;			//tells which input to select in MUX which is present in diagram, 19.3.4 section in RTM
 	sConfig.ICPrescaler = TIM_ICPSC_DIV1;									//to slow down the input signal in input channel of timer
 	sConfig.ICFilter = 0;									//to configure the digital filter present in input stage of timer
 
-	if ( HAL_TIM_IC_ConfigChannel ( &htim_6, &sConfig, TIM_CHANNEL_1 ) != HAL_OK )		//this API is used to configure the input channel of the Input Capture Timer
+	if ( HAL_TIM_IC_ConfigChannel ( &htim_2, &sConfig, TIM_CHANNEL_1 ) != HAL_OK )		//this API is used to configure the input channel of the Input Capture Timer
 	{
 		Error_Handler();
 	}
+}
+
+void TIM6_Init ()
+{
+	htim6_freq.Instance = TIM6;
+	htim6_freq.Init.CounterMode = TIM_COUNTERMODE_UP;
+	htim6_freq.Init.Prescaler = 9;
+	htim6_freq.Init.Period = 50-1;			//for delay of 10us, ie this much delay is required to generate 50MHz frequency wavefoem at 50Mhz TIMx_CLK
+
+	if ( HAL_TIM_Base_Init( &htim6_freq ) != HAL_OK )
+	{
+		Error_Handler ();
+	}
+}
+
+void GPIO_Init()
+{
+    __HAL_RCC_GPIOA_CLK_ENABLE();				//because there is no MspInit in case of GPIOs
+	GPIO_InitTypeDef ledgpio;
+	ledgpio.Pin = GPIO_PIN_5;
+	ledgpio.Mode = GPIO_MODE_OUTPUT_PP;
+	ledgpio.Pull = GPIO_NOPULL;
+	HAL_GPIO_Init(GPIOA,&ledgpio);
 }
 
 void UART2_Init ()

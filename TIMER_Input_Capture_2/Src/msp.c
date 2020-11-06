@@ -9,6 +9,7 @@ void HAL_MspInit()
 
 	//2. Enable required system exceptions of the processor
 	SCB->SHCSR |= ( 0x7 << 16 );							//enabling MemoryManagement, BusFault, UsageFault system  exception
+
 	/*HAL_NVIC_EnableIRQ ( MemoryManagement_IRQn  );
 	HAL_NVIC_EnableIRQ( BusFault_IRQn );
 	HAL_NVIC_EnableIRQ( UsageFault_IRQn );*/
@@ -78,6 +79,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef *huart)
 	//3. Pin Muxing configurations
 	GPIO_InitTypeDef *GPIO_Init;
 
+	GPIO_Init->Mode = GPIO_MODE_AF_PP;
 	GPIO_Init->Pull = GPIO_PULLUP;
 	GPIO_Init->Speed = GPIO_SPEED_FREQ_LOW;
 	GPIO_Init->Alternate = GPIO_AF7_USART2;
@@ -89,6 +91,21 @@ void HAL_UART_MspInit(UART_HandleTypeDef *huart)
 	//USART2_RX
 	GPIO_Init->Pin = GPIO_PIN_3;
 	HAL_GPIO_Init( GPIOA, GPIO_Init );
+
+}
+
+
+void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *htimer)
+{
+
+	//1. enable the clock for the TIM6 peripheral
+	__HAL_RCC_TIM6_CLK_ENABLE();
+
+	//2. Enable the IRQ of TIM6
+	HAL_NVIC_EnableIRQ(TIM6_DAC_IRQn);
+
+	//3. setup the priority for TIM6_DAC_IRQn
+	HAL_NVIC_SetPriority(TIM6_DAC_IRQn,15,0);
 
 }
 
