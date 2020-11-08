@@ -1,29 +1,6 @@
-12:09:53 **** Incremental Build of configuration Debug for project TIMER_Input_Capture_2 ****
+20:44:37 **** Build of configuration Debug for project TIMER_Input_Capture_2 ****
 make all 
-Building file: ../Src/it.c
-Invoking: MCU GCC Compiler
-N:\Workspace\MCU2_Udemy_Course\My_Workspace\MasteringMCU2_WS\TIMER_Input_Capture_2\Debug
-arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F446xx -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/TIMER_Input_Capture_2/Inc" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/TIMER_Input_Capture_2/Drivers/STM32F4xx_HAL_Driver/Inc" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/TIMER_Input_Capture_2/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/TIMER_Input_Capture_2/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/TIMER_Input_Capture_2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/it.d" -MT"Src/it.o" -o "Src/it.o" "../Src/it.c"
-Finished building: ../Src/it.c
- 
-Building file: ../Src/main.c
-Invoking: MCU GCC Compiler
-N:\Workspace\MCU2_Udemy_Course\My_Workspace\MasteringMCU2_WS\TIMER_Input_Capture_2\Debug
-arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 '-D__weak=__attribute__((weak))' '-D__packed=__attribute__((__packed__))' -DUSE_HAL_DRIVER -DSTM32F446xx -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/TIMER_Input_Capture_2/Inc" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/TIMER_Input_Capture_2/Drivers/STM32F4xx_HAL_Driver/Inc" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/TIMER_Input_Capture_2/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/TIMER_Input_Capture_2/Drivers/CMSIS/Device/ST/STM32F4xx/Include" -I"N:/Workspace/MCU2_Udemy_Course/My_Workspace/MasteringMCU2_WS/TIMER_Input_Capture_2/Drivers/CMSIS/Include"  -Og -g3 -Wall -fmessage-length=0 -ffunction-sections -c -fmessage-length=0 -MMD -MP -MF"Src/main.d" -MT"Src/main.o" -o "Src/main.o" "../Src/main.c"
-Finished building: ../Src/main.c
- 
-Building target: TIMER_Input_Capture_2.elf
-Invoking: MCU GCC Linker
-arm-none-eabi-gcc -mcpu=cortex-m4 -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -specs=nosys.specs -specs=nano.specs -u_printf_float -T"../STM32F446RETx_FLASH.ld" -Wl,-Map=output.map -Wl,--gc-sections -o "TIMER_Input_Capture_2.elf" @"objects.list"   -lm
-Finished building target: TIMER_Input_Capture_2.elf
- 
-make --no-print-directory post-build
-Generating binary and Printing size information:
-arm-none-eabi-objcopy -O binary "TIMER_Input_Capture_2.elf" "TIMER_Input_Capture_2.bin"
-arm-none-eabi-size "TIMER_Input_Capture_2.elf"
-   text	   data	    bss	    dec	    hex	filename
-  19368	    492	   1788	  21648	   5490	TIMER_Input_Capture_2.elf
- 
+make: Nothing to be done for 'all'.
 
-12:10:04 Build Finished (took 11s.11ms)
+20:45:09 Build Finished (took 32s.257ms)
 

@@ -1,0 +1,269 @@
+/*
+ * This Application produces square wave forms of
+ * 500Hz, 1KHz, 2KHz and 4KHz on 4 different output
+ * channels.
+ *
+ * */
+
+
+#include "main.h"
+#include<string.h>
+
+
+void SystemClockConfig ();
+void TIM2_Init ();
+void Error_Handler();
+void UART2_Init ();							//UART is used for printing info in serial monitor/terminal
+void GPIO_Init ();
+
+TIM_HandleTypeDef htim_2;
+TIM_IC_InitTypeDef sConfig;
+UART_HandleTypeDef huart;
+
+volatile uint8_t is_capture_done = 0;
+
+
+//Note: These all are first pulse values, second pulse values are given in ISR
+volatile uint32_t pulse1_value = 25000; 			//pulse value to produce 500Hz
+volatile uint32_t pulse2_value = 12500; 			//pulse value to produce 1000HZ
+volatile uint32_t pulse3_value = 6250;  			//pulse value to produce 2000Hz
+volatile uint32_t pulse4_value = 3125;  			//pulse value to produce 4000Hz
+
+uint32_t CCR_value;
+
+int main ()
+{
+	HAL_Init ();
+
+	SystemClockConfig ();
+
+	GPIO_Init();
+
+	TIM2_Init ();										/* This function initializes the time base unit and configures the Channels as Output Channel and the configures the parameters related to all those Output channels*/
+
+	UART2_Init ();										//because we want to send freq of signal value over uart to print it in terminal
+
+
+	//Start the TIMER in OUTPUT Compare Mode
+
+	if( HAL_TIM_OC_Start_IT(&htim_2,TIM_CHANNEL_1) != HAL_OK)
+	{
+		Error_Handler();
+	}
+
+	if( HAL_TIM_OC_Start_IT(&htim_2,TIM_CHANNEL_2) != HAL_OK)
+	{
+		Error_Handler();
+	}
+
+	if( HAL_TIM_OC_Start_IT(&htim_2,TIM_CHANNEL_3) != HAL_OK)
+	{
+		Error_Handler();
+	}
+
+	if( HAL_TIM_OC_Start_IT(&htim_2,TIM_CHANNEL_4) != HAL_OK)
+	{
+		Error_Handler();
+	}
+
+	return 0;
+}
+
+
+
+void SystemClockConfig ()
+{
+		RCC_OscInitTypeDef osc_init;
+
+		memset ( &osc_init, 0, sizeof(osc_init) );
+		osc_init.OscillatorType = RCC_OSCILLATORTYPE_HSI | RCC_OSCILLATORTYPE_LSE;
+		osc_init.HSEState = RCC_HSE_ON;
+		osc_init.HSIState = RCC_HSI_ON;
+		osc_init.LSEState = RCC_LSE_ON;						//LSE Configurations
+		osc_init.HSICalibrationValue = 16;
+		osc_init.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+		osc_init.PLL.PLLState = RCC_PLL_ON;
+		osc_init.PLL.PLLM = 8;
+		osc_init.PLL.PLLN = 50;
+		osc_init.PLL.PLLP = 2;
+		osc_init.PLL.PLLQ = 2;
+		osc_init.PLL.PLLR = 2;
+
+		if ( HAL_RCC_OscConfig ( &osc_init ) != HAL_OK )			//it activates HSI, LSE crystal oscillator and waits for turning it on
+		{
+			Error_Handler();
+		}
+
+		RCC_ClkInitTypeDef clk_init;
+		uint32_t FLatency;
+
+		memset ( &clk_init, 0, sizeof(clk_init) );
+		clk_init.ClockType = ( RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2 );
+		clk_init.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+		clk_init.AHBCLKDivider = RCC_SYSCLK_DIV1;
+		clk_init.APB1CLKDivider = RCC_HCLK_DIV2;
+		clk_init.APB2CLKDivider = RCC_HCLK_DIV1;
+		FLatency = FLASH_ACR_LATENCY_1WS;
+
+		if ( HAL_RCC_ClockConfig ( &clk_init, FLatency ) != HAL_OK )
+		{
+			Error_Handler();
+		}
+
+		/* After this SYSCLK will be 50 MHz */
+
+}
+
+
+void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim)				//whenever capture event occurs then this callback will be called via ISR
+{
+	/* whenever capture interrupt happens ie value of Count register matches with CCR register, then Output has to be toggled */
+
+
+	//Note: first pulse value is given in Pulse member variable while doing Output Capture Configurations, so now we have give second pulse value so that we have second pulse
+	//Note: Above thing keeps going on continuously, and waveform is generated
+
+	/* TIM3_CH1 toggling with frequency = 500 Hz */
+	if ( htim->Channel == HAL_TIM_ACTIVE_CHANNEL_1 )
+	{
+		CCR_value = HAL_TIM_ReadCapturedValue ( htim, TIM_CHANNEL_1 );
+		__HAL_TIM_SET_COMPARE ( htim, TIM_CHANNEL_1, CCR_value + pulse1_value );
+
+		/* initial value of CCR was pulse1_value, so when Count reaches pulse1_value, then it was first toggled,
+		 * and first pulse is generated, but now CCR value is changed and is increased by pulse1_value,
+		 * now CCR = CCR + pulse1_value, so when count reaches here ie new CCR value then,
+		 *  output is toggled again and second pulse is generated which completes the full one clock cycle ie full pulse
+		 *  Note: CCR is updated ie second pulse value is stored in CCR at the time of interrupt ie time just after the count
+		 *  reaches first pulse value */
+
+	}
+
+	/* TIM3_CH2 toggling with frequency = 1000 Hz */
+	if ( htim->Channel == HAL_TIM_ACTIVE_CHANNEL_2 )
+	{
+		CCR_value = HAL_TIM_ReadCapturedValue ( htim, TIM_CHANNEL_2 );
+		__HAL_TIM_SET_COMPARE ( htim, TIM_CHANNEL_2, CCR_value + pulse2_value );
+	}
+
+
+	/* TIM3_CH3 toggling with frequency = 2000 Hz */
+	if ( htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3 )
+	{
+		CCR_value = HAL_TIM_ReadCapturedValue ( htim, TIM_CHANNEL_3 );
+		__HAL_TIM_SET_COMPARE ( htim, TIM_CHANNEL_3, CCR_value + pulse3_value );
+	}
+
+
+	/* TIM3_CH4 toggling with frequency = 4000 Hz */
+	if ( htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4 )
+	{
+		CCR_value = HAL_TIM_ReadCapturedValue ( htim, TIM_CHANNEL_4 );
+		__HAL_TIM_SET_COMPARE ( htim, TIM_CHANNEL_4, CCR_value + pulse4_value );
+	}
+
+}
+
+
+void TIM2_Init ()
+{
+	htim_2.Instance = TIM2;
+	htim_2.Init.Prescaler = 1;
+	htim_2.Init.CounterMode = TIM_COUNTERMODE_UP;
+	htim_2.Init.Period = 0xFFFFFFFF;
+
+	if ( HAL_TIM_OC_Init ( &htim_2 ) != HAL_OK )
+	{
+		Error_Handler ();
+	}
+
+	TIM_OC_InitTypeDef sConfig;
+	sConfig.OCMode = TIM_OCMODE_TOGGLE;
+	sConfig.OCPolarity = TIM_OCPOLARITY_HIGH;      /* Polarity member controls the Output  Control block which comes after CCR register,
+	 	 	 	 	 	 	 	 	 	 	 	 	  Output of Timer OC ie signal which is toggled (OC1REF) is processed by Control Block to give OC1
+	 	 	 	 	 	 	 	 	 	 	 	 	   OC1 can be same as OC1REF or it can be inverted, and it depends upon this Polaity member.
+	 	 	 	 	 	 	 	 	 	 	 	 	   Polarity high means OC1 will be same as OC1REF, fig 195*/
+	sConfig.Pulse = pulse1_value;
+	if ( HAL_TIM_OC_ConfigChannel ( &htim_2, &sConfig, TIM_CHANNEL_1 ) != HAL_OK )
+	{
+		Error_Handler ();
+	}
+
+	sConfig.Pulse  = pulse2_value;
+   if ( HAL_TIM_OC_ConfigChannel ( &htim_2, &sConfig, TIM_CHANNEL_2 ) != HAL_OK )
+   {
+	   Error_Handler ();
+   }
+
+   sConfig.Pulse  = pulse3_value;
+   if ( HAL_TIM_OC_ConfigChannel ( &htim_2, &sConfig, TIM_CHANNEL_3 ) != HAL_OK )
+   {
+	   Error_Handler ();
+   }
+
+   sConfig.Pulse  = pulse4_value;
+   if ( HAL_TIM_OC_ConfigChannel ( &htim_2, &sConfig, TIM_CHANNEL_4 ) != HAL_OK )
+   {
+	   Error_Handler ();
+   }
+}
+
+void UART2_Init ()
+{
+	huart.Instance = USART2;
+	huart.Init.BaudRate = 11520;
+	huart.Init.WordLength = UART_WORDLENGTH_8B;
+	huart.Init.StopBits = UART_STOPBITS_1;
+	huart.Init.Parity = UART_PARITY_NONE;
+	huart.Init.Mode = UART_MODE_TX;
+	huart.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+	huart.Init.OverSampling = UART_OVERSAMPLING_8;
+
+	if ( HAL_UART_Init( &huart ) != HAL_OK )						//for low levels inits of uart, msp api will be called from inside of this API
+	{
+		Error_Handler();
+	}
+}
+
+
+void GPIO_Init ()
+{
+
+}
+void Error_Handler()
+{
+	while(1);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ * 1. Processor Initializations
+ * 2. System Clock Configurations
+ * 3. Peripheral Initializations
+ * 	  High Level Inits (done in UART2_Init() ) + Low Level Inits ( done in msp.c)
+ *
+ *
+ * Processor Initializations: ( done in HAL_Inits() )
+ * - High Level Inits
+ * - Low Level Inits (call is made by HAL_Init() to HAL_MspInit() in msp.c to do this task)
+ *
+ *
+ * Peripheral Initializations:
+ * - High Level Inits   ( done in UART2_Init () )
+ * - Low Level Inits	(call is made by HAL_UART_Init() to HAL_UART_MspInit() in msp.c to do this task)
+ *
+ * */
