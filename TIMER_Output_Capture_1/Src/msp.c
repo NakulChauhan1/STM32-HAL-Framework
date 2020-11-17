@@ -25,37 +25,6 @@ void HAL_MspInit()
 }
 
 
-
-void HAL_UART_MspInit(UART_HandleTypeDef *huart)
-{
-
-	//1. Enable clock of peripheral
-	__HAL_RCC_USART2_CLK_ENABLE();
-	__HAL_RCC_GPIOA_CLK_ENABLE();
-
-
-	//2. Do NVIC setting
-	HAL_NVIC_EnableIRQ(USART2_IRQn);
-	HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
-	HAL_NVIC_SetPriority(USART2_IRQn, 15, 0);
-
-	//3. Pin Muxing configurations
-	GPIO_InitTypeDef *GPIO_Init;
-
-	GPIO_Init->Pull = GPIO_PULLUP;
-	GPIO_Init->Speed = GPIO_SPEED_FREQ_LOW;
-	GPIO_Init->Alternate = GPIO_AF7_USART2;
-
-	//USART2_TX
-	GPIO_Init->Pin = GPIO_PIN_2;
-	HAL_GPIO_Init( GPIOA, GPIO_Init );
-
-	//USART2_RX
-	GPIO_Init->Pin = GPIO_PIN_3;
-	HAL_GPIO_Init( GPIOA, GPIO_Init );
-
-}
-
 void HAL_TIM_OC_MspInit(TIM_HandleTypeDef *htim)
 {
 	 //1. enable the peripheral clock

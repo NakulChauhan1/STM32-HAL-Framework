@@ -161,7 +161,7 @@ void SystemClockConfig ()
 		RCC_OscInitTypeDef osc_init;
 
 		memset ( &osc_init, 0, sizeof(osc_init) );
-		osc_init.OscillatorType = RCC_OSCILLATORTYPE_HSI | RCC_OSCILLATORTYPE_LSE;
+		osc_init.OscillatorType = RCC_OSCILLATORTYPE_HSE | RCC_OSCILLATORTYPE_LSE;
 		osc_init.HSEState = RCC_HSE_ON;
 		osc_init.HSIState = RCC_HSI_ON;
 		osc_init.LSEState = RCC_LSE_ON;						//LSE Configurations

@@ -1,6 +1,6 @@
-12:15:00 **** Build of configuration Debug for project UART_UART2_Example2_IT ****
+14:41:04 **** Build of configuration Debug for project UART_UART2_Example2_IT ****
 make all 
 make: Nothing to be done for 'all'.
 
-12:15:00 Build Finished (took 785ms)
+14:41:06 Build Finished (took 2s.273ms)
 
