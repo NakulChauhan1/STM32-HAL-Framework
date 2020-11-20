@@ -44,7 +44,7 @@ void TIM2_Inits ()
 	htim.Instance = TIM2;
 	htim.Init.CounterMode = TIM_COUNTERMODE_UP;
 	htim.Init.Period = 0xFFFFFFFF;
-	if ( HAL_TIM_OC_Init ( &htim ) )
+	if ( HAL_TIM_OC_Init ( &htim ) )							//Initializing time base unit of General Purpose Timer for Output Compare
 	{
 		Error_Handler ();
 	}

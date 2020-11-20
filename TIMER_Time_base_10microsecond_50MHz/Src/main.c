@@ -103,7 +103,7 @@ void TIM6_Init ()
 	htim.Init.Prescaler = 0;				//( prescalar + 1 ) is the exact value which the clock
 	htim.Init.Period = ( 500 - 1 );
 
-	if ( HAL_TIM_Base_Init( &htim ) != HAL_OK )
+	if ( HAL_TIM_Base_Init( &htim ) != HAL_OK )						//Initializing time base unit of Basic Timer
 	{
 		Error_Handler();
 	}

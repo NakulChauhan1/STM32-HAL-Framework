@@ -1,6 +1,5 @@
 /*
- * Write a application, which uses basic timer to generate interrupt for every 100 ms. Toggle the GPIO or LED inside
- * the Timer IRQ handler and verify using logic analyzer.
+ * Write a application, which uses basic timer to generate delay for every 100 ms.
  * */
 
 
@@ -66,7 +65,7 @@ void TIM6_Inits()
 	htim_6.Init.Prescaler = 24;
 	htim_6.Init.Period = 64000 - 1;
 
-	if ( HAL_TIM_Base_Init ( &htim_6 ) != HAL_OK )
+	if ( HAL_TIM_Base_Init ( &htim_6 ) != HAL_OK )			//Initializing time base unit of Basic Timer
 	{
 		Error_Handler ();
 	}

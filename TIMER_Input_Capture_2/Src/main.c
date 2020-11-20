@@ -236,7 +236,12 @@ void Error_Handler()
 	while(1);
 }
 
-
+/*
+ * Note: In case of timer, it doesnot matter which timer it is, basic, general purpose, or
+ * advance timer, first thing always is Initializing the Time base unit of that timer and then
+ * configuring its other things like IC, OC, PWM etc if it is there
+ *
+ * */
 
 
 
