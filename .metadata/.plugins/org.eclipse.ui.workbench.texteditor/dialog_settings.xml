@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="HAL_TIM_OC_DelayElapsedCallback" key="selection"/>
+		<item value="UART_Stop_Bits" key="selection"/>
 		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="HAL_TIM_OC_DelayElapsedCallback"/>
-			<item value="GPIO_Alternate_function_selection"/>
+			<item value="UART_Stop_Bits"/>
+			<item value="UART_Word_Length"/>
+			<item value="TIM_OC1_SetConfig"/>
+			<item value="HAL_TIM_IC_CaptureCallback"/>
 			<item value="GPIO_speed_define"/>
 			<item value="GPIO_pull_define"/>
 			<item value="GPIO_mode_define"/>
 			<item value="GPIO_pins_define"/>
-			<item value="HAL_TIM_OC_MspInit"/>
-			<item value="TIM_Output_Compare_Polarity"/>
 		</list>
 		<list key="replacehistory">
 			<item value="htim_2"/>
