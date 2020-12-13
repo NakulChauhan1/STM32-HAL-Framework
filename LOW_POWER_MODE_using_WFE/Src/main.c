@@ -14,12 +14,10 @@ Enter to sleep mode using WFI instruction.
 #include<string.h>
 
 void SystemClockConfig();
-void TIM6_Inits();
 void Error_Handler();
 void GPIO_Inits();
-void ToggleWithDelay ();
 void UART2_Inits ();
-void GPIO_AnalogConfig ();
+
 
 TIM_HandleTypeDef htim_6;
 UART_HandleTypeDef huart2;
@@ -40,8 +38,7 @@ int main ()
 
 	//HLL initializations and LL initializations of peripherals
 
-	//Initializations of TIMER
-	TIM6_Inits();
+
 
 	//Initializations of GPIO
 	GPIO_Inits();
@@ -56,30 +53,16 @@ int main ()
 	/* start with fresh Status register of Timer to avoid any spurious interrupts */
 	  TIM6->SR = 0;
 
-	//note: till here timer is only initialized not started, we just have to start the timer (in order to generate required delay), as we have done the initializations.
-	ToggleWithDelay ();
+
 
 	while(1);
 
 	return 0;
 }
 
-void ToggleWithDelay ()
-{
-	//start timer in interrupt mode
-	HAL_TIM_Base_Start_IT ( &htim_6 );
-}
 
 
-void HAL_TIM_PeriodElapsedCallback ( TIM_HandleTypeDef *htim )
-{
-	//send data after required delay
-	 if ( HAL_UART_Transmit ( &huart2, (uint8_t*)data, (uint16_t)strlen((char*)data), HAL_MAX_DELAY ) != HAL_OK )
-	 {
-		 Error_Handler();
-	 }
 
-}
 
 
 void SystemClockConfig()
@@ -87,19 +70,7 @@ void SystemClockConfig()
 	//we do not need clk config in this application, so default clock is sufficient
 }
 
-void TIM6_Inits()
-{
-	htim_6.Instance = TIM6;
-	htim_6.Init.CounterMode = TIM_COUNTERMODE_UP;				//Basic timer can only do up counting
-	htim_6.Init.Prescaler = 24;
-	htim_6.Init.Period = 64000 - 1;
 
-	if ( HAL_TIM_Base_Init ( &htim_6 ) != HAL_OK )				//Initializing time base unit of Basic Timer
-	{
-		Error_Handler ();
-	}
-
-}
 
 
 void GPIO_Inits()
